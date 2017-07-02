@@ -1,0 +1,56 @@
+#!/sbin/sh
+
+# Copyright 2013 Koushik Dutta, 2014 Ron Rieve
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# arg 1 is recovery api version, generally 3.
+# arg 2 is the pipe fd, to the recovery binary.
+# communicate with it using the recovery api.
+# arg 3 is the zip file
+
+echo -n -e 'ui_print Getting ready...\n' > /proc/self/fd/$2
+
+WORK_FOLDER='emojione'
+ZIP_FILE="$3"
+ADDOND='90-emojione.sh'
+FONT_PATH='/system/fonts/NotoColorEmoji.ttf'
+
+cd /tmp
+mkdir $WORK_FOLDER
+cd $WORK_FOLDER
+unzip -o "$ZIP_FILE"
+
+mount /system
+
+
+echo -n -e "ui_print Moving old emoji font to $FONT_PATH.old...\n" > /proc/self/fd/$2
+
+mv -f "$FONT_PATH" "$FONT_PATH.old"
+
+
+echo -n -e "ui_print Installing new emoji font...\n" > /proc/self/fd/$2
+
+cp emojione-android.ttf "$FONT_PATH"
+chmod 644 "$FONT_PATH"
+
+
+echo -n -e 'ui_print Installing OTA survival script...\n' > /proc/self/fd/$2
+
+cp ${ADDOND} /system/addon.d/
+
+
+echo -n -e 'ui_print Enjoy EmojiOne! Ü\n' > /proc/self/fd/$2
+echo -n -e 'ui_print\n' > /proc/self/fd/$2
+
+umount /system
