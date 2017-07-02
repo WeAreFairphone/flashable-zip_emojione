@@ -1,0 +1,8 @@
+EmojiOne v2 Installer
+---
+
+**Flashable ZIP** to replace Android [emoji set](https://www.google.com/get/noto/help/emoji/) with [EmojiOne](https://www.emojione.com/emoji/v2).
+
+EmojiOne v2 is an emoji set more comprehensible than Android's one [before Marshmallow](http://blog.emojipedia.org/android-6-0-1-emoji-changelog/).  
+Version 2 of EmojiOne is the last [open and free](https://github.com/Ranks/emojione/blob/2.2.7/LICENSE.md) version of EmojiOne. EmojiOne v3 and later are **not open** to the public anymore.  
+The flashable ZIP saves a copy of the previous installed emoji on your device at `/system/fonts/NotoColorEmoji.ttf.old`.
