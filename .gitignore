@@ -1,0 +1,5 @@
+# Ignore ZIP files
+*.zip
+
+# Ignore font files
+*.ttf
