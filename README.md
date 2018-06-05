@@ -11,12 +11,19 @@ The flashable ZIP saves a copy of the previous installed emoji on your device at
 Build
 ===
 
-Run the `build-zip.sh` shell script:
+Run:
 ```
-source build-zip.sh
+make build
 ```
 
-This will generate a `emojione_YYYY-MM-DD.zip` file.
+This will generate a `emojione.zip` in the `build/` folder.
+
+To make a public release, run:
+```
+make release
+```
+
+This will generate a `emojione_YYYY-MM-DD.zip` file in the `releases/` folder.
 
 
 Install
