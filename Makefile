@@ -5,11 +5,11 @@ SOURCE       := ./src/
 SOURCEFILES  := $(shell find $(SOURCE) 2> /dev/null | sort)
 
 FLASHABLEZIP := ./build/emojione.zip
-RELEASENAME  := "emojione-v2_%Y-%m-%d.zip"
+RELEASENAME  := "emojione-v3_%Y-%m-%d.zip"
 
-EMOJIONE_VERSION := 2.2.7
+EMOJIONE_VERSION := 3.1.2
 EMOJIONE_FONT    := ./assets/emojione-android_$(EMOJIONE_VERSION).ttf
-EMOJIONE_URL     := https://github.com/Ranks/emojione/raw/v$(EMOJIONE_VERSION)/assets/fonts/emojione-android.ttf
+EMOJIONE_URL     := https://github.com/emojione/emojione-assets/releases/download/$(EMOJIONE_VERSION)/emojione-android.ttf
 EMOJIONE_DEST    := ./src/emojione-android.ttf
 
 
