@@ -23,18 +23,18 @@ $(FLASHABLEZIP): $(SOURCEFILES) $(EMOJIONE_FONT)
 	@cp -f "$(EMOJIONE_FONT)" "$(EMOJIONE_DEST)"
 	@rm -f "$(FLASHABLEZIP)"
 	@cd "$(SOURCE)" && zip \
-	"../$(FLASHABLEZIP)" . \
-	--recurse-path \
-	--exclude '*.asc' '*.xml'
+		"../$(FLASHABLEZIP)" . \
+		--recurse-path \
+		--exclude '*.asc' '*.xml'
 	@echo "Result: $(FLASHABLEZIP)"
 
 $(EMOJIONE_FONT):
 	@echo "Downloading emojione..."
 	@mkdir -pv `dirname $(EMOJIONE_FONT)`
 	@curl \
-	-L "$(EMOJIONE_URL)" \
-	-o "$(EMOJIONE_FONT)" \
-	--connect-timeout 30
+		-L "$(EMOJIONE_URL)" \
+		-o "$(EMOJIONE_FONT)" \
+		--connect-timeout 30
 
 clean:
 	@echo Removing built files...
