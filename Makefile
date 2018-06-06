@@ -45,4 +45,4 @@ clean:
 
 release: $(FLASHABLEZIP)
 	@mkdir -pv release
-	cp "$(FLASHABLEZIP)" "release/$$(date +$(RELEASENAME))"
+	@cp -v "$(FLASHABLEZIP)" "release/$$(date +$(RELEASENAME))"
