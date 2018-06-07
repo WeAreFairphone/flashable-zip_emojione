@@ -13,7 +13,7 @@ EMOJIONE_URL     := https://github.com/Ranks/emojione/raw/v$(EMOJIONE_VERSION)/a
 EMOJIONE_DEST    := ./src/emojione-android.ttf
 
 
-.PHONY: all build clean release
+.PHONY: all build clean release install
 all: build
 
 build: $(FLASHABLEZIP)
@@ -46,3 +46,8 @@ clean:
 release: $(FLASHABLEZIP)
 	@mkdir -pv release
 	@cp -v "$(FLASHABLEZIP)" "release/$$(date +$(RELEASENAME))"
+
+install: $(FLASHABLEZIP)
+	@echo "Waiting for ADB sideload mode"
+	@adb wait-for-sideload
+	@adb sideload $(FLASHABLEZIP)
