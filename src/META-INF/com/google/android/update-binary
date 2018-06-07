@@ -32,7 +32,9 @@ ui_print "Getting ready..."
 
 WORK_FOLDER='emojione'
 ZIP_FILE="$3"
-ADDOND='90-emojione.sh'
+ADDOND='90-emoji.sh'
+ADDOND_OLD='90-emojione.sh'
+ADDOND_DIR='/system/addon.d'
 FONT_PATH='/system/fonts/NotoColorEmoji.ttf'
 
 cd /tmp
@@ -56,7 +58,8 @@ chmod 644 "$FONT_PATH"
 
 ui_print "Installing OTA survival script..."
 
-cp ${ADDOND} /system/addon.d/
+rm -f ${ADDOND_DIR}/${ADDOND_OLD}
+cp ${ADDOND} ${ADDOND_DIR}
 
 
 ui_print "Enjoy EmojiOne! Ü"

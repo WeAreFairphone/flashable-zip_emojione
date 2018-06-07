@@ -1,7 +1,7 @@
 #!/sbin/sh
 #
-# /system/addon.d/90-emojione.sh
-# During a system upgrade, this script backs up EmojiOne font,
+# /system/addon.d/90-emoji.sh
+# During a system upgrade, this script backs up the current emoji font,
 # /system is formatted and reinstalled, then the file is restored.
 #
 
@@ -23,7 +23,6 @@ case "$1" in
     list_files | while read FILE REPLACEMENT; do
       R=""
       [ -n "$REPLACEMENT" ] && R="$S/$REPLACEMENT"
-      mv "$R" "$R.old" # Backup original font
       [ -f "$C/$S/$FILE" ] && restore_file $S/"$FILE" "$R"
     done
   ;;
@@ -34,7 +33,8 @@ case "$1" in
     # Stub
   ;;
   pre-restore)
-    # Stub
+    # Backup original font
+    copy_file $S/fonts/NotoColorEmoji.ttf $S/fonts/NotoColorEmoji.ttf.old
   ;;
   post-restore)
     # Stub
