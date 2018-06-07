@@ -45,9 +45,14 @@ unzip -o "$ZIP_FILE"
 mount /system
 
 
+if [ ! -e "$FONT_PATH.old" ]
+then
 ui_print "Moving old emoji font to $FONT_PATH.old..."
 
 mv -f "$FONT_PATH" "$FONT_PATH.old"
+else
+ui_print "Not backing up current emoji font: there's already a `basename $FONT_PATH.old` in `dirname $FONT_PATH.old`."
+fi
 
 
 ui_print "Installing new emoji font..."
