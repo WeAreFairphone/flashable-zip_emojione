@@ -1,5 +1,6 @@
 # Ignore ZIP files
 *.zip
+*.sha256sum
 
 # Ignore font files
 *.ttf

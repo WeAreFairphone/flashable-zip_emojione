@@ -12,6 +12,8 @@ EMOJIONE_DEST    := ./src/emojione-android.ttf
 FLASHABLEZIP := ./build/emojione.zip
 RELEASENAME  := $(shell date +"emojione-v$(EMOJIONE_VERSION)_%Y-%m-%d.zip")
 RELEASEZIP   := release/$(RELEASENAME)
+RELEASESUM   := $(RELEASEZIP).sha256sum
+
 
 .PHONY: all build clean release install
 all: build
@@ -43,11 +45,14 @@ clean:
 	@# only remove dir if it's empty:
 	@rmdir -p `dirname $(FLASHABLEZIP)` 2>/dev/null || true
 
-release: $(RELEASEZIP)
+release: $(RELEASEZIP) $(RELEASESUM)
 $(RELEASEZIP): $(FLASHABLEZIP)
 	@mkdir -pv "$(@D)"
 	@echo -n "Release file: "
 	@cp -v "$(FLASHABLEZIP)" "$@"
+$(RELEASESUM): $(RELEASEZIP)
+	@echo "Release checksum: $@"
+	@cd "$(@D)" && sha256sum $(RELEASENAME) > $(@F)
 
 install: $(FLASHABLEZIP)
 	@echo "Waiting for ADB sideload mode"
