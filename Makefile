@@ -4,14 +4,14 @@
 SOURCE       := ./src/
 SOURCEFILES  := $(shell find $(SOURCE) 2> /dev/null | sort)
 
-FLASHABLEZIP := ./build/emojione.zip
-RELEASENAME  := "emojione-v2_%Y-%m-%d.zip"
-
 EMOJIONE_VERSION := 2.2.7
 EMOJIONE_FONT    := ./assets/emojione-android_$(EMOJIONE_VERSION).ttf
 EMOJIONE_URL     := https://github.com/Ranks/emojione/raw/v$(EMOJIONE_VERSION)/assets/fonts/emojione-android.ttf
 EMOJIONE_DEST    := ./src/emojione-android.ttf
 
+FLASHABLEZIP := ./build/emojione.zip
+RELEASENAME  := $(shell date +"emojione-v$(EMOJIONE_VERSION)_%Y-%m-%d.zip")
+RELEASEZIP   := release/$(RELEASENAME)
 
 .PHONY: all build clean release install
 all: build
@@ -19,21 +19,21 @@ all: build
 build: $(FLASHABLEZIP)
 $(FLASHABLEZIP): $(SOURCEFILES) $(EMOJIONE_FONT)
 	@echo "Building flashable ZIP..."
-	@mkdir -pv `dirname $(FLASHABLEZIP)`
+	@mkdir -pv "$(@D)"
 	@cp -f "$(EMOJIONE_FONT)" "$(EMOJIONE_DEST)"
-	@rm -f "$(FLASHABLEZIP)"
+	@rm -f "$@"
 	@cd "$(SOURCE)" && zip \
-		"../$(FLASHABLEZIP)" . \
+		"../$@" . \
 		--recurse-path \
 		--exclude '*.asc' '*.xml'
-	@echo "Result: $(FLASHABLEZIP)"
+	@echo "Result: $@"
 
 $(EMOJIONE_FONT):
 	@echo "Downloading emojione..."
-	@mkdir -pv `dirname $(EMOJIONE_FONT)`
+	@mkdir -pv "$(@D)"
 	@curl \
 		-L "$(EMOJIONE_URL)" \
-		-o "$(EMOJIONE_FONT)" \
+		-o "$@" \
 		--connect-timeout 30
 
 clean:
@@ -43,9 +43,11 @@ clean:
 	@# only remove dir if it's empty:
 	@rmdir -p `dirname $(FLASHABLEZIP)` 2>/dev/null || true
 
-release: $(FLASHABLEZIP)
-	@mkdir -pv release
-	@cp -v "$(FLASHABLEZIP)" "release/$$(date +$(RELEASENAME))"
+release: $(RELEASEZIP)
+$(RELEASEZIP): $(FLASHABLEZIP)
+	@mkdir -pv "$(@D)"
+	@echo -n "Release file: "
+	@cp -v "$(FLASHABLEZIP)" "$@"
 
 install: $(FLASHABLEZIP)
 	@echo "Waiting for ADB sideload mode"
